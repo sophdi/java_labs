@@ -12,10 +12,10 @@ import java.util.List;
 public class ElectiveFacade {
 
     // внутрішні колекції підсистем
-    private List<Course> courses = new ArrayList<>();
-    private List<Student> students = new ArrayList<>();
-    private List<Registration> registrations = new ArrayList<>();
-    private List<Archive> archives = new ArrayList<>();
+    private final List<Course> courses = new ArrayList<>();
+    private final List<Student> students = new ArrayList<>();
+    private final List<Registration> registrations = new ArrayList<>();
+    private final List<Archive> archives = new ArrayList<>();
 
     private long regIdCounter = 1;
     private long archiveIdCounter = 1;
