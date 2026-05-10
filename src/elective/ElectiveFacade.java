@@ -66,8 +66,8 @@ public class ElectiveFacade {
      * Перевіряє коректність оцінки та відсутність дублювання.
      */
     public Archive gradeStudent(long studentId, long courseId, int grade) {
-        if (grade < 0 || grade > 100) {
-            System.out.println("Помилка: оцінка повинна бути в межах від 0 до 100");
+        if (grade < 1 || grade > 100) {
+            System.out.println("Помилка: оцінка повинна бути в межах від 1 до 100");
             return null;
         }
 
