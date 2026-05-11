@@ -17,6 +17,9 @@ public class ElectiveFacade {
     private final List<Registration> registrations = new ArrayList<>();
     private final List<Archive> archives = new ArrayList<>();
 
+    // список спостерігачів
+    private final List<CourseObserver> observers = new ArrayList<>();
+
     private long regIdCounter = 1;
     private long archiveIdCounter = 1;
 
@@ -26,6 +29,18 @@ public class ElectiveFacade {
 
     public void addStudent(Student student) {
         students.add(student);
+    }
+
+    // реєстрація спостерігача
+    public void addObserver(CourseObserver observer) {
+        observers.add(observer);
+    }
+
+    // сповіщення всіх спостерігачів
+    private void notifyObservers(Student student, Course course) {
+        for (CourseObserver observer : observers) {
+            observer.onStudentRegistered(student, course);
+        }
     }
 
     /**
@@ -58,6 +73,10 @@ public class ElectiveFacade {
 
         System.out.println("Студент " + student.getFirstName() + " " + student.getLastName()
                 + " записаний на курс: " + course.getName());
+
+        // сповіщаємо спостерігачів про нову реєстрацію
+        notifyObservers(student, course);
+
         return reg;
     }
 
