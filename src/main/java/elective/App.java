@@ -92,6 +92,23 @@ public class App {
                 + " | оцінка: " + a.getGrade())
         );
 
+        // --- HQL запити ---
+        System.out.println("\n=== ВИКЛАДАЧІ (HQL, сортування за прізвищем) ===");
+        teacherDao.findAllOrderedHQL().forEach(System.out::println);
+
+        System.out.println("\n=== КУРСИ ДОВШЕ 8 ТИЖНІВ (HQL) ===");
+        courseDao.findLongerThanHQL(8).forEach(System.out::println);
+
+        System.out.println("\n=== СТУДЕНТИ 2 КУРСУ (HQL) ===");
+        studentDao.findByCourseYearHQL(2).forEach(System.out::println);
+
+        // --- Native SQL запити ---
+        System.out.println("\n=== ВСІ ВИКЛАДАЧІ (Native SQL) ===");
+        teacherDao.findAllNativeSQL().forEach(System.out::println);
+
+        System.out.println("\n=== СТУДЕНТИ 3 КУРСУ (Native SQL) ===");
+        studentDao.findByCourseYearNativeSQL(3).forEach(System.out::println);
+
         Factory.getInstance().getEntityManagerFactory().close();
     }
 }
