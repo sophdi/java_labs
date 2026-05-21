@@ -107,4 +107,50 @@ public class StudentRepository implements StudentDao {
             em.close();
         }
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Student> findAllNativeSQL() {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNativeQuery("SELECT * FROM students", Student.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Student> findByCourseYearNativeSQL(int courseYear) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNativeQuery("SELECT * FROM students WHERE course_year = ?", Student.class)
+                    .setParameter(1, courseYear)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Student> findAllOrderedHQL() {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("FROM Student s ORDER BY s.lastName", Student.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Student> findByCourseYearHQL(int courseYear) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("FROM Student s WHERE s.courseYear = :courseYear", Student.class)
+                    .setParameter("courseYear", courseYear)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }

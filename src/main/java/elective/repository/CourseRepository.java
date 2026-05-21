@@ -106,4 +106,50 @@ public class CourseRepository implements CourseDao {
             em.close();
         }
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Course> findAllNativeSQL() {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNativeQuery("SELECT * FROM courses", Course.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Course> findByNameNativeSQL(String name) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNativeQuery("SELECT * FROM courses WHERE name = ?", Course.class)
+                    .setParameter(1, name)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Course> findAllOrderedHQL() {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("FROM Course c ORDER BY c.name", Course.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Course> findLongerThanHQL(int weeks) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("FROM Course c WHERE c.durationWeeks > :weeks", Course.class)
+                    .setParameter("weeks", weeks)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }

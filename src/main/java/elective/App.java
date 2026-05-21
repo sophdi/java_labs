@@ -48,11 +48,17 @@ public class App {
         // --- СТУДЕНТИ (ManyToMany) ---
         Student student1 = new Student("Софія", "Дімітрова", "dimitrova@student.ua", 2);
         Student student2 = new Student("Марія", "Шевченко", "shevchenko@student.ua", 3);
+        Student student3 = new Student("Іван", "Петренко", "petrenkoivan@student.ua", 1);
+        Student student4 = new Student("Олена", "Кравченко", "kravchenko@student.ua", 3);
         student1.getCourses().add(course1);
         student1.getCourses().add(course3);
         student2.getCourses().add(course1);
+        student3.getCourses().add(course2);
+        student4.getCourses().add(course3);
         studentDao.save(student1);
         studentDao.save(student2);
+        studentDao.save(student3);
+        studentDao.save(student4);
 
         System.out.println("\n=== СТУДЕНТИ ===");
         studentDao.findAll().forEach(System.out::println);
@@ -85,6 +91,23 @@ public class App {
                 + " | " + a.getRegistration().getCourse().getName()
                 + " | оцінка: " + a.getGrade())
         );
+
+        // --- HQL запити ---
+        System.out.println("\n=== ВИКЛАДАЧІ (HQL, сортування за прізвищем) ===");
+        teacherDao.findAllOrderedHQL().forEach(System.out::println);
+
+        System.out.println("\n=== КУРСИ ДОВШЕ 8 ТИЖНІВ (HQL) ===");
+        courseDao.findLongerThanHQL(8).forEach(System.out::println);
+
+        System.out.println("\n=== СТУДЕНТИ 2 КУРСУ (HQL) ===");
+        studentDao.findByCourseYearHQL(2).forEach(System.out::println);
+
+        // --- Native SQL запити ---
+        System.out.println("\n=== ВСІ ВИКЛАДАЧІ (Native SQL) ===");
+        teacherDao.findAllNativeSQL().forEach(System.out::println);
+
+        System.out.println("\n=== СТУДЕНТИ 3 КУРСУ (Native SQL) ===");
+        studentDao.findByCourseYearNativeSQL(3).forEach(System.out::println);
 
         Factory.getInstance().getEntityManagerFactory().close();
     }

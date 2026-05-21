@@ -106,4 +106,50 @@ public class TeacherRepository implements TeacherDao {
             em.close();
         }
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Teacher> findAllNativeSQL() {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNativeQuery("SELECT * FROM teachers", Teacher.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Teacher> findByEmailNativeSQL(String email) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNativeQuery("SELECT * FROM teachers WHERE email = ?", Teacher.class)
+                    .setParameter(1, email)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Teacher> findAllOrderedHQL() {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("FROM Teacher t ORDER BY t.lastName", Teacher.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Teacher> findByFirstNameHQL(String firstName) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("FROM Teacher t WHERE t.firstName = :firstName", Teacher.class)
+                    .setParameter("firstName", firstName)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }

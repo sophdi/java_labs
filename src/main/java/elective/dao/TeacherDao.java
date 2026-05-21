@@ -5,4 +5,12 @@ import java.util.List;
 
 public interface TeacherDao extends GeneralDao<Teacher> {
     List<Teacher> findByLastName(String lastName);
+
+    // Native SQL
+    List<Teacher> findAllNativeSQL();
+    List<Teacher> findByEmailNativeSQL(String email);
+
+    // HQL
+    List<Teacher> findAllOrderedHQL();
+    List<Teacher> findByFirstNameHQL(String firstName);
 }
