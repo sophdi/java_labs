@@ -9,4 +9,8 @@ public interface TeacherDao extends GeneralDao<Teacher> {
     // Native SQL
     List<Teacher> findAllNativeSQL();
     List<Teacher> findByEmailNativeSQL(String email);
+
+    // HQL
+    List<Teacher> findAllOrderedHQL();
+    List<Teacher> findByFirstNameHQL(String firstName);
 }

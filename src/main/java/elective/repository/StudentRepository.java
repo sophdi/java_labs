@@ -131,4 +131,26 @@ public class StudentRepository implements StudentDao {
             em.close();
         }
     }
+
+    @Override
+    public List<Student> findAllOrderedHQL() {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("FROM Student s ORDER BY s.lastName", Student.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Student> findByCourseYearHQL(int courseYear) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("FROM Student s WHERE s.courseYear = :courseYear", Student.class)
+                    .setParameter("courseYear", courseYear)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }
