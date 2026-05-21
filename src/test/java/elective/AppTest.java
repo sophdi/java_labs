@@ -3,7 +3,6 @@ package elective;
 import elective.config.Factory;
 import elective.dao.*;
 import elective.entity.*;
-import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -18,11 +17,6 @@ public class AppTest {
     private static final StudentDao studentDao = Factory.getInstance().getStudentRepository();
     private static final RegistrationDao registrationDao = Factory.getInstance().getRegistrationRepository();
     private static final ArchiveDao archiveDao = Factory.getInstance().getArchiveRepository();
-
-    @AfterClass
-    public static void tearDown() {
-        Factory.getInstance().getEntityManagerFactory().close();
-    }
 
     @Test
     public void testOneToMany_TeacherWithCourses() {
